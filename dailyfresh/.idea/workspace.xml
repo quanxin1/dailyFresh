@@ -126,8 +126,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="79" />
+    <option name="x" value="70" />
+    <option name="y" value="53" />
     <option name="width" value="1375" />
     <option name="height" value="821" />
   </component>
@@ -215,7 +215,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/.virtualenvs/python3_django/bin/python" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Mytest/Test5" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -512,7 +512,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="79" width="1375" height="821" extended-state="0" />
+    <frame x="70" y="53" width="1375" height="821" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21980496" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
