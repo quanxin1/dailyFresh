@@ -19,10 +19,10 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^tinymce',include('tinymce.urls')),
-    url(r'^user/',include('app.user.urls',namespace='user')),
-    url(r'^cart/', include('app.cart.urls', namespace='cart')),
-    url(r'^goods/', include('app.goods.urls', namespace='goods')),
-    url(r'^order/', include('app.order.urls', namespace='order')),
-    url(r'^',include('app.user.urls',namespace='goods')),
+    url(r'^user/',include('user.urls',namespace='user')),
+    url(r'^cart/', include('cart.urls', namespace='cart')),
+    url(r'^goods/', include('goods.urls', namespace='goods')),
+    url(r'^order/', include('order.urls', namespace='order')),
+    url(r'^',include('goods.urls',namespace='goods')),
 
 ]
