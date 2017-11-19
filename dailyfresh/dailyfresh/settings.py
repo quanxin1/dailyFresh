@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'dailyfresh.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DailyFresh',
+        'NAME': 'dailyfresh',
         'HOST':'localhost',
         'PORT':3306,
         'USER':'root',
@@ -146,5 +146,8 @@ SESSION_CACHE_ALIAS = "default"
 
 LOGIN_URL = 'user/login.html'
 
+FDFS_CLIENT_CONF='./utils/fdfs/client.conf'
 
-
+FDFS_URL='http://192.168.207.135:8888/'
+#设置默认的调用方法
+DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDSStorage'
