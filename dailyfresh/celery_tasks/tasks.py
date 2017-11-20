@@ -21,22 +21,22 @@ def send_register_active_email(to_email,username,token):
     username, token, token)
     send_mail(subject,message,sender,receiver,html_message=html_msg)
     time.sleep(5)
+
 @app.task
 def generate_static_index_html():
-    def get(self,request):
-        types=GoodsType.objects.all()
-        goodsbanner=IndexGoodsBanner.objects.all().order_by('index')
-        promotionbanner=IndexPromotionBanner.objects.all().order_by('index')
-        for typeTemp in types:
-            img_banner=IndexTypeGoodsBanner.objects.filter(type=typeTemp,display_type=1).order_by('index')
-            title_banner=IndexTypeGoodsBanner.objects.filter(type=typeTemp,display_type=0).order_by('index')
-            typeTemp.img_banner=img_banner
-            typeTemp.title_banner=title_banner
-        cart_count=0
-        user=request.user
-        context={'types':types,'goodsbanner':goodsbanner,'promotionbanner':promotionbanner,'cart_count':cart_count}
-        temp=loader.get_template('goods/static_index.html')
-        static_html=temp.render(context)
-        save_path = os.path.join(settings.BASE_DIR,'static/index.html')
-        with open(save_path) as f:
-            f.write(static_html)
+    types=GoodsType.objects.all()
+    goodsbanner=IndexGoodsBanner.objects.all().order_by('index')
+    promotionbanner=IndexPromotionBanner.objects.all().order_by('index')
+    for typeTemp in types:
+        img_banner=IndexTypeGoodsBanner.objects.filter(type=typeTemp,display_type=1).order_by('index')
+        title_banner=IndexTypeGoodsBanner.objects.filter(type=typeTemp,display_type=0).order_by('index')
+        typeTemp.img_banner=img_banner
+        typeTemp.title_banner=title_banner
+    cart_count=0
+    context={'types':types,'goodsbanner':goodsbanner,'promotionbanner':promotionbanner,'cart_count':cart_count}
+    temp=loader.get_template('goods/static_index.html')
+    static_html=temp.render(context)
+    save_path = os.path.join(settings.BASE_DIR,'static/index.html')
+    print(save_path)
+    with open(save_path,'w') as f:
+        f.write(static_html)
