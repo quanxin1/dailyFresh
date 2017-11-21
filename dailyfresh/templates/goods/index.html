@@ -12,7 +12,7 @@
 		<div class="navbar">
 			<h1 class="fl">全部商品分类</h1>
 			<ul class="navlist fl">
-				<li><a href="">首页</a></li>
+				<li><a href="{% url 'goods:index' %}">首页</a></li>
 				<li class="interval">|</li>
 				<li><a href="">手机生鲜</a></li>
 				<li class="interval">|</li>
@@ -24,18 +24,15 @@
 	<div class="center_con clearfix">
 		<ul class="subnav fl">
             {% for type in types %}
-			<li><a href="#model0{{ forloop.counter }}" class="{{ type.logo }}">{{ type.name }}</a></li>
+{#                var type_id={{ forloop.counter }}#}
+			<li><a href="/list/{{ forloop.counter }}/1" class="{{ type.logo }}">{{ type.name }}</a></li>
             {% endfor %}
-{#			<li><a href="#model02" class="seafood">海鲜水产</a></li>#}
-{#			<li><a href="#model03" class="meet">猪牛羊肉</a></li>#}
-{#			<li><a href="#model04" class="egg">禽类蛋品</a></li>#}
-{#			<li><a href="#model05" class="vegetables">新鲜蔬菜</a></li>#}
-{#			<li><a href="#model06" class="ice">速冻食品</a></li>#}
+
 		</ul>
 		<div class="slide fl">
 			<ul class="slide_pics">
                 {% for banner in goodsbanner %}
-                    <li><img src="{{ banner.image.url }}" alt="幻灯片"></li>
+                    <a href="/list/{{ banner.sku.type.id }}/1"><li><img src="{{ banner.image.url }}" alt="幻灯片"></li></a>
                 {% endfor %}
 
 
@@ -63,11 +60,11 @@
                 <div class="subtitle fl">
                     <span>|</span>
                     {% for title in type.title_banner %}
-                        <a href="#">{{ title.sku.name }}</a>
+                        <a href="/goods/{{ title.sku.id }}">{{ title.sku.name }}</a>
                     {% endfor %}
 
                 </div>
-                <a href="#" class="goods_more fr" id="fruit_more">查看更多 ></a>
+                <a href="/list/{{ type.title_banner.type.id }}/1" class="goods_more fr" id="fruit_more">查看更多 ></a>
             </div>
 
             <div class="goods_con clearfix">
@@ -75,8 +72,8 @@
                 <ul class="goods_list fl">
                     {% for img in type.img_banner %}
                     <li>
-                        <h4><a href="#">{{ img.sku.name }}</a></h4>
-                        <a href="#"><img src="{{ img.sku.image.url }}"></a>
+                        <h4><a href="/goods/{{ img.sku.id }}">{{ img.sku.name }}</a></h4>
+                        <a href="/goods/{{ img.sku.id }}"><img src="{{ img.sku.image.url }}"></a>
                         <div class="prize">¥ {{ img.sku.price }}</div>
                     </li>
                     {% endfor %}

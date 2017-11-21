@@ -13,6 +13,7 @@ class BaseModelAdmin(admin.ModelAdmin):
         super().delete_model(request,obj)
         from celery_tasks.tasks import generate_static_index_html
         generate_static_index_html.delay()
+
         cache.delete('index_page_data')
 
 class GoodsTypeAdmin(BaseModelAdmin):
