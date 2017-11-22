@@ -39,8 +39,9 @@
             </div>
 			<div class="total">总价：<em>16.80元</em></div>
 			<div class="operate_btn">
+                {% csrf_token %}
 				<a href="javascript:;" class="buy_btn">立即购买</a>
-				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
+				<a href="javascript:;" class="add_cart" sku_id="{{ sku.id }}" id="add_cart">加入购物车</a>
 			</div>
 		</div>
 	</div>
@@ -83,31 +84,81 @@
 
 		</div>
 	</div>
-
-	<div class="add_jump"></div>
+    <div class="add_jump"></div>
 {% endblock main_content %}
 {% block bottom_files %}
-	<script type="text/javascript" src="js/jquery-1.12.2.js"></script>
+
 {% endblock bottom_files %}
 {% block bottom %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
 	<script type="text/javascript">
+         update_goods_amount();
+        function update_goods_amount() {
+            price=$('.show_pirze').children('em').text();
+            count=$('.num_show').val();
+
+            price=parseFloat(price);
+            count=parseInt(count);
+            amount=price*count;
+            $('.total').children('em').text(amount.toFixed(2)+'元')
+        }
+        $('.add').click(function () {
+            count=$('.num_show').val();
+            count=parseInt(count)+1;
+            $('.num_show').val(count);
+
+            update_goods_amount()
+        })
+        $('.minus').click(function () {
+            count=$('.num_show').val();
+            count=parseInt(count)-1;
+            if (count<=0){
+                count=1
+            }
+            $('.num_show').val(count);
+
+            update_goods_amount()
+        })
+        $('.num_show').blur(function () {
+            count=$('.num_show').val();
+            if (isNaN(count) || count.trim().length==0 || parseInt(count)<=0){
+                count=1
+            }
+            count=parseInt(count);
+            $('.num_show').val(count);
+            update_goods_amount()
+        })
 		var $add_x = $('#add_cart').offset().top;
 		var $add_y = $('#add_cart').offset().left;
 
 		var $to_x = $('#show_count').offset().top;
 		var $to_y = $('#show_count').offset().left;
 
-		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+
 		$('#add_cart').click(function(){
-			$(".add_jump").stop().animate({
-				'left': $to_y+7,
-				'top': $to_x+7},
-				"fast", function() {
-					$(".add_jump").fadeOut('fast',function(){
-						$('#show_count').html(2);
-					});
-			});
+		    sku_id=$(this).attr('sku_id');
+		    count=$('.num_show').val();
+		    csrf=$('input[name="csrfmiddlewaretoken').val();
+		    params={'sku_id':sku_id,'count':count,'csrfmiddlewaretoken':csrf};
+		    $.post('/cart/add',params,function (data) {
+                if (data.res==5){
+                    $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'});
+                    $(".add_jump").stop().animate({
+                        'left': $to_y+7,
+                        'top': $to_x+7},
+                        "fast", function() {
+                            $(".add_jump").fadeOut('fast', function () {
+                                $('#show_count').html(data.cart_count);
+                            });
+
+                    });
+                }
+                else {
+                    alert(data.errmsg)
+                }
+            })
+
 		})
 	</script>
 {% endblock bottom %}
-	
+

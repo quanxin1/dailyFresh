@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djcelery',
     'tinymce',
+    'haystack',
     'user',
     'cart',
     'goods',
@@ -152,3 +153,19 @@ FDFS_CLIENT_CONF='./utils/fdfs/client.conf'
 FDFS_URL='http://192.168.207.135:8888/'
 #设置默认的调用方法
 DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDSStorage'
+
+HAYSTACK_CONNECTIONS={
+    'default':{
+        #使用Whoosh引擎
+        'ENGINE':'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        #索引文件路径
+        'PATH':os.path.join(BASE_DIR,'whoosh_index'),
+    }
+}
+HAYSTACK_SIGNAL_PROCESSOR='haystack.signals.RealtimeSignalProcessor'
+
+HAYSTACK_SEARCH_RESULTS_PAR_PAGE=1
+
+
+
+

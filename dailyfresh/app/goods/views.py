@@ -78,7 +78,7 @@ class ListView(View):
         else:
             sort='default'
             skus=GoodsSKU.objects.filter(type=type).order_by('-id')
-        paginator = Paginator(skus,3)
+        paginator = Paginator(skus,1)
         try:
             page=int(page)
         except Exception as e:
@@ -86,6 +86,16 @@ class ListView(View):
         if page > paginator.num_pages:
             page=1
         skus_page = paginator.page(page)
+
+        num_pages=paginator.num_pages
+        if num_pages<=5:
+            pages=range(1,num_pages+1)
+        elif page<=3:
+            pages=range(1,6)
+        elif num_pages-page<=2:
+            pages=range(num_pages-4,num_pages+1)
+        else:
+            pages=range(page-2,page+3)
 
         new_skus=GoodsSKU.objects.filter(type=type).order_by('-create_time')[:3]
 
@@ -100,7 +110,7 @@ class ListView(View):
                  'skus_page':skus_page,
                  'new_skus':new_skus,
                  'cart_count':cart_count,
-                 'sort':sort}
+                 'sort':sort,'pages':pages}
 
         return render(request,'goods/list.html',context)
 
