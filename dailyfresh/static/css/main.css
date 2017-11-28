@@ -54,7 +54,7 @@ html,body{height:100%}
 }
 
 .guest_cart .cart_name{
-	width:158px;height:38px;line-height:38px;border:1px solid #dddddd;display:block;background:url(../images/icons.png) 13px -300px no-repeat;font-size:14px;color:#37ab40;text-indent:56px;
+	width:158px;height:38px;line-height:38px;border:1px solid #dddddd;display:block;background:url(../image/icons.png) 13px -300px no-repeat;font-size:14px;color:#37ab40;text-indent:56px;
 }
 
 .guest_cart .goods_count{
@@ -388,7 +388,7 @@ html,body{height:100%}
 .settlements .col03 b{color:#ff0000;font-size:14px;padding:0 5px;}
 
 .settlements .col04{width:14%;text-align:center;float:right;}
-.settlements .col04 a{display:block;height:78px;background-color:#ff3d3d;text-align:center;line-height:78px;color:#fff;font-size:24px}
+.settlements .col04 input{display:block;width:168px;height:78px;background-color:#ff3d3d;text-align:center;line-height:78px;color:#fff;font-size:24px;border:0px}
 
 
 .common_title{width:1200px;margin:20px auto 0;font-size:14px;}

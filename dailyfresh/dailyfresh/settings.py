@@ -24,9 +24,9 @@ sys.path.insert(0,os.path.join(BASE_DIR,'app'))
 SECRET_KEY = 'n%i+rs5ob)m8*2jhq@x252^l96mz4pxntm4)!al)z8v$@@xq=('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -113,7 +113,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
-
+STATIC_ROOT='/var/www/dailyfresh/statica'
 AUTH_USER_MODEL = 'user.User'
 
 TINYMCE_DEFAULT_CONFIG={
@@ -150,7 +150,7 @@ LOGIN_URL = 'user/login.html'
 
 FDFS_CLIENT_CONF='./utils/fdfs/client.conf'
 
-FDFS_URL='http://192.168.207.135:8888/'
+FDFS_URL='http://192.168.207.139:8888/'
 #设置默认的调用方法
 DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDSStorage'
 

@@ -12,6 +12,8 @@ from celery_tasks.tasks import send_register_active_email
 from utils.mixin import LoginRequireMixin
 from django_redis import get_redis_connection
 from goods.models import GoodsSKU
+from order.models import OrderInfo,OrderGoods
+from django.core.paginator import Paginator
 import re
 
 
@@ -122,9 +124,39 @@ class UserInfoView(LoginRequireMixin,View):
         context={'page':'user','address':address,'goods_list':goods_list}
         return render(request,'user/user_center_info.html',context)
 class UserOrderView(LoginRequireMixin,View):
-    def get(self,request):
+    def get(self,request,page):
+        """用户中心订单页"""
+        user =request.user
+        orders= OrderInfo.objects.filter(user=user).order_by('-create_time')
+        for order in orders:
+            order_skus=OrderGoods.objects.filter(order_id=order.order_id)
+            for order_sku in order_skus:
+                amount=order_sku.price*order_sku.count
+                order_sku.amount=amount
+                #动态给order增加一个属性status_name
+            order.status_name=OrderInfo.ORDER_STATUS[order.order_status]
+            #动态给order增加一个属性order_skus,保存订单信息
+            order.order_skus=order_skus
+        paginator=Paginator(orders,1)
+        try:
+            page=int(page)
+        except Exception as e:
+            page=1
+        if page>paginator.num_pages:
+            page=1
+        order_page=paginator.page(page)
 
-        return render(request,'user/user_center_order.html',{"page":"order"})
+        num_pages=paginator.num_pages
+        if num_pages < 5:
+            pages=range(1,num_pages+1)
+        elif page<=3:
+            pages=range(1,6)
+        elif num_pages-page<=2:
+            pages=range(page-4,num_pages+1)
+        else:
+            pages=range(page-2,page+3)
+        context = {'order_page':order_page,"pages":pages,"page":"order"}
+        return render(request,'user/user_center_order.html',context)
 class AddressView(LoginRequireMixin,View):
     def get(self,request):
         user = request.user

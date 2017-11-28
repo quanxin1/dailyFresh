@@ -65,23 +65,24 @@
 
 		<div class="r_wrap fr clearfix">
 			<ul class="detail_tab clearfix">
-				<li class="active">商品介绍</li>
-				<li>评论</li>
+				<li id="tag_detail" class="active">商品介绍</li>
+                <li id="tag_comment">评论</li>
+            </ul>
+            <div class="tab_content" id="tab_detail">
+                <dl>
+                    <dt>商品详情</dt>
+                    <dd>{{ sku.goods.detail|safe }}</dd>
+                </dl>
+            </div>
+
+            <div class="tab_content" id="tab_comment" style="display: none">
                 {% for comment in sku_orders %}
-                    <li>评论时间：{{ comment.update_time }}</li>
-                    <li>用户名：{{ comment.order.user.name }}</li>
-                    <li>评论:{{ comment.comment }}</li>
+                    <dt>评论时间：{{ comment.update_time }}</dt>
+                    <dd>用户名：{{ comment.order.user.name }}</dd>
+                    <dd>评论:{{ comment.comment }}</dd>
                 {% endfor %}
 
-			</ul>
-
-			<div class="tab_content">
-				<dl>
-					<dt>商品详情：</dt>
-					<dd>{{ sku.goods.detail|safe }}</dd>
-				</dl>
-			</div>
-
+            </div>
 		</div>
 	</div>
     <div class="add_jump"></div>
@@ -92,6 +93,18 @@
 {% block bottom %}
     <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
 	<script type="text/javascript">
+        $('#tag_detail').click(function () {
+            $(this).addClass('active')
+            $('#tag_comment').removeClass('active')
+            $('#tab_detail').show()
+            $("#tab_comment").hide()
+        })
+        $('#tag_comment').click(function () {
+            $(this).addClass('active')
+            $('#tag_detail').removeClass('active')
+            $('#tab_detail').hide()
+            $("#tab_comment").show()
+        })
          update_goods_amount();
         function update_goods_amount() {
             price=$('.show_pirze').children('em').text();

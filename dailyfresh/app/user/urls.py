@@ -9,7 +9,7 @@ urlpatterns=[
     url(r'^active/(?P<token>.*)$',views.ActiveView.as_view(),name='active'),
     url(r'^login/$',views.LoginView.as_view(),name='login'),
     url(r'^user/$',login_required(views.UserInfoView.as_view()),name='user'),
-    url(r'^order/$',views.UserOrderView.as_view(),name='order'),
+    url(r'^order/(?P<page>\d+)$',views.UserOrderView.as_view(),name='order'),
     url(r'^address/$',views.AddressView.as_view(),name='address'),
     url(r'^logout/$',views.Logout.as_view(),name='logout')
 ]
